@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSX Syntax Deep Dive</title>
+    <style>
+        .displayNone{
+            display: none;
+        }
+        #loginbtn{
+            padding: 10px;
+            font-size: 16px;
+            margin: 20px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://www.unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
+    <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+    <script type="text/babel">
+
+        let rearningTopics = ["React", "React DOM", "Babel", "JSX", "Component", "Props"];
+
+
+        function JSXShowcase() {
+            const [isProvideNotes, isProvideNotesUpdate] = React.useState(false);
+
+            // Notes availablety upadate function
+            function updateNotesAvaliablety() {
+                if (isProvideNotes) {
+                    isProvideNotesUpdate(false);
+                } else {
+                    isProvideNotesUpdate(true);
+                }
+            }
+
+            // login Logout Condition
+            function loginLogoutFunc() {
+                if (document.getElementById("loginbtn").textContent == "LogOut") {
+                    document.getElementById("loginbtn").textContent = "LogIn";
+                    document.getElementById("loginmsg").className = "";
+                    document.getElementById("contentArea").className = "displayNone";
+                }else{
+                    document.getElementById("loginbtn").textContent = "LogOut";
+                    document.getElementById("loginmsg").className = "displayNone";
+                    document.getElementById("contentArea").className = "";
+                }
+
+            }
+            return (
+                <>
+                <h1 className="displayNone" id="loginmsg">Sorry You need to login, click the login button!</h1>
+                    <div id="contentArea">
+                        <h1>Welcome to Pari's workshop</h1>
+                        <h2>React</h2>
+                        <p>In this workshop we are going to learn react and see how to render an element into the dom in react</p>
+
+                        <p>Topics Learn: {rearningTopics.join(", ")}</p>
+                        <p>Notes Availabel: <span style={{ backgroundColor: isProvideNotes ? "green" : "red", padding: "5px", borderRadius: "5px", color: "white" }}>{isProvideNotes ? "Yes" : "No"}</span></p>
+
+
+                        <button onClick={updateNotesAvaliablety}>Update Notes Availablety</button>
+                    </div>
+
+                    <button onClick={loginLogoutFunc} id="loginbtn">LogOut</button>
+
+                </>
+
+
+            );
+        }
+
+
+        // rendering into the dom
+        const rootElement = ReactDOM.createRoot(document.getElementById("root"));
+        rootElement.render(<JSXShowcase />);
+    </script>
+</body>
+
+</html>
